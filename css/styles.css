@@ -1,0 +1,62 @@
+/* leaflet */
+
+#map {
+  height: 85vh;
+}
+
+.mapInfoBox {
+  background-color: #fff;
+  border: 2px solid rgba(0,0,0,0.2);
+  background-clip: padding-box;
+  padding: 6px 10px 6px 6px;
+  border-radius: 5px;
+  width: 150px;
+}
+
+/* bootstrap */
+
+.h2, h2 {
+  font-size: 1.25rem;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.mapDetails {
+  background-color: #f1f3f5;
+}
+
+.datalink {
+  font-weight: 400; 
+  color: #1E5288;
+}
+
+.bg-azred {
+  background-color: #ab0520;
+}
+
+.btn-azblue {
+  color: #fff;
+  background-color: #0c234b;
+}
+
+.btn-azblue:hover {
+  background-color: #133877;
+}
+
+.modal-dialog {
+  max-width: 800px;
+}
+
+.footer {
+  font-size: .8rem;
+  color: #333333;
+  background-color: #e6e3d9;
+}
+
+.footer-link {
+  color: #333; 
+  font-weight: 700; 
+  text-decoration: underline;
+}

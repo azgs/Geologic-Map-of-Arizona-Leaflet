@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Geologic Map of Arizona">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+        integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+    <!-- VectorGrid -->
+    <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
+
+    <!-- Leaflet.pip -->
+    <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
+
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/dt-1.11.5/fh-3.2.2/r-2.2.9/datatables.min.css" />
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/dt-1.11.5/fh-3.2.2/r-2.2.9/datatables.min.js"></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <title>Geologic Map of Arizona</title>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-azred">
+
+        <a class="navbar-brand" href="http://www.arizona.edu" title="The University of Arizona">
+            <img alt="The University of Arizona" height="16" src="./img/ua.svg" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" title="Arizona Geological Survey" href="https://azgs.arizona.edu/">Arizona
+                        Geological Survey</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- <div class="container-fluid p-0">
+        <div class="alert alert-warning text-center">
+            <span class="font-weight-bold">Note:</span> This is a GIS master's project, and not a UArizona Domain.
+        </div>
+    </div> -->
+
+    <div class="container">
+
+        <div class="d-none d-sm-block p-2">
+            <a href="http://www.azgs.arizona.edu">
+                <img alt="Arizona Geological Survey" title="Arizona Geological Survey" width="375"
+                    src="./img/azgs.png" />
+            </a>
+        </div>
+
+        <div id='map'></div>
+
+        <div class="rounded mapDetails mt-2 p-3">
+            <h1 style="font-size: 1.75em;" class="text-center">Information</h1>
+            <dl class="row">
+                <dt class="col-md-2">Geologic Units</dt>
+                <dd class="col-md-10">A volume of rock that can be identified using distinct characteristics.
+                </dd>
+
+                <dt class="col-md-2">Faults</dt>
+                <dd class="col-md-10">A crack within the Earth's crust.
+                </dd>
+
+                <dt class="col-md-2">Geologic Maps</dt>
+                <dd class="col-md-10">Detailed geology reports and maps published by the Arizona
+                    Geological Survey.
+                </dd>
+            </dl>
+
+            <div class="text-center p-2">
+                <h2>Data Sources</h2>
+                <div class="font-weight-light">
+                    Geology data derived from the <a target="_blank" class="datalink text-nowrap"
+                        title="Geologic Map of Arizona"
+                        href="http://repository.azgs.az.gov/uri_gin/azgs/dlio/632">Geologic Map of Arizona</a>
+                </div>
+                <div class="font-weight-light">
+                    Geologic maps from the
+                    <a target="_blank" title="AZGS Document Repository" class="datalink text-nowrap"
+                        href="http://repository.azgs.az.gov/">AZGS Document Repository</a>
+                </div>
+            </div>
+
+            <div style="font-size: 0.7em;" class="text-center">Click below to view the legends</div>
+        </div>
+
+        <div id="Modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Modal title</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-age pl-3"></div>
+                    <div class="modal-mapunit pl-3"></div>
+                    <div class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion mt-2 mb-1" id="legends">
+            <div>
+                <div class="mb-2" id="headingOne">
+                    <button class="btn btn-azblue text-white btn-lg btn-block collapsed" type="button"
+                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne">
+                        GEOLOGIC UNITS
+                    </button>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#legends">
+                    <div>
+
+                        <div>
+                            <table id="mupsTable" class="table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="dtr-control"></th>
+                                        <th>Name</th>
+                                        <th class="min-desktop">Map Unit</th>
+                                        <th class="min-desktop">Age</th>
+                                        <th class="min-desktop">Younger Bound</th>
+                                        <th class="min-desktop">Older Bound</th>
+                                        <th class="min-desktop">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mupsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="mb-1" id="headingTwo">
+                    <button class="btn btn-azblue text-white btn-lg btn-block collapsed" type="button"
+                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                        aria-controls="collapseTwo">
+                        FAULTS
+                    </button>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#legends">
+
+                    <div class="row text-center">
+                        <div class="col-lg-3 col-md-6 p-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="img-fluid" src="./img/2.1.1.png">
+                                    <h2 class="card-title" data-key="2.1.1">Fault</h2>
+                                    <p class="card-text">Fault (generic; vertical, subvertical, or high-angle; or
+                                        unknown or unspecified orientation or sense of slip) —Identity and existence
+                                        certain, location accurate</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 p-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="img-fluid" src="./img/2.10.1.png">
+                                    <h2 class="card-title" data-key="2.10.1">Detachment fault</h2>
+                                    <p class="card-text">Detachment fault (sense of slip unspecified) (1st
+                                        option)—Identity and existence certain, location accurate. Hachures on upper
+                                        plate Detachment fault (sense of slip unspecified)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 p-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="img-fluid" src="./img/2.8.1.png">
+                                    <h2 class="card-title" data-key="2.8.1">Thrust fault</h2>
+                                    <p class="card-text">Thrust fault (1st option)—Identity and existence certain,
+                                        location accurate. Sawteeth on upper (tectonically higher) plate</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 p-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="img-fluid" src="./img/2.10.33.png">
+                                    <h2 class="card-title" data-key="2.10.33">Listric fault</h2>
+                                    <p class="card-text">Listric fault at head of detachment fault (sense of slip
+                                        unspecified)—Identity and existence certain, location accurate. Ticks on
+                                        upper plate
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="mb-2" id="headingThree">
+                    <button class="btn btn-azblue text-white btn-lg btn-block collapsed" type="button"
+                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree">
+                        GEOLOGIC MAPS
+                    </button>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#legends">
+                    <div>
+                        <table id="azgsMapTable" class="table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="dtr-control"></th>
+                                    <th class="min-tablet-l">Year</th>
+                                    <th class="" data-priority="1">Title</th>
+                                    <th class="none">Link</th>
+                                    <th class="none">Author</th>
+                                    <th class="none">Abstract</th>
+                                </tr>
+                            </thead>
+                            <tbody id="azgsMapTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer mt-5">
+        <div class="container">
+            <div class="text-center p-3">
+
+                <a class="footer-link" href="https://www.arizona.edu/information-security-privacy" target="_blank"
+                    rel="noopener noreferrer">University Information Security and Privacy</a>
+
+                <div class="p-2">
+                    The maps, reports, and other information and content on this website are provided
+                    as a
+                    public service for informational purposes only. Accuracy is not guaranteed, and the information
+                    contained or linked on this website should not be relied on except as general information. The
+                    University makes no
+                    warranties or representations of any kind, and specifically disclaims all warranties including
+                    the
+                    warranty of merchantability and fitness for a particular purpose. Users are responsible for
+                    verification
+                    of all
+                    facts and information to their own satisfaction.</div>
+                <div class="p-2">© 2022 The Arizona Board of Regents on behalf of <a href="http://www.arizona.edu"
+                        class="footer-link" target="_blank">The
+                        University of Arizona</a>.</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/MupJson.js"></script>
+    <script src="./js/index.js"></script>
+
+</body>
+
+</html>
